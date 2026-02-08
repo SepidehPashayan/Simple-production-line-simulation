@@ -27,7 +27,7 @@ class Machine(threading.Thread):
         return False
 
     def can_start(self):
-        if self.check_failure() == False:
+        if self.state != "broken":
             with inventory_lock:
                 for y in self.ip:
                     if y not in inventory:
@@ -36,17 +36,23 @@ class Machine(threading.Thread):
                     inventory.remove(y)
                 return True
 
-    def start_working(self):
-        if self.can_start():
-            self.state = "working"
-            print(f"machine {self.n} is working")
-            time.sleep(self.t)
-            with inventory_lock:
-                inventory.append(self.op)
-                print(f"machine {self.n} produced {self.op}")
-            
-            if self.name == "4" and self.op:
-                print("The production was completed successfully")
+    def run(self):
+        while True:
+            if self.can_start():
+                if self.check_failure():
+                    print("production failed")
+                    break
+                self.state = "working"
+                print(f"machine {self.n} is working")
+                time.sleep(self.t)
+                with inventory_lock:
+                    inventory.append(self.op)
+                    print(f"machine {self.n} produced {self.op}")
+                
+                if self.n == "4" and self.op:
+                    print("The production was completed successfully")
+                break
+            time.sleep(0.1)
 
             
 m1 = Machine("1", 3, 1, [], "Piece1")
