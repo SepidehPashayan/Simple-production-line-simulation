@@ -3,6 +3,10 @@
 > A concurrent manufacturing pipeline simulation written in Python using threads.  
 > Four machines run in parallel, passing pieces through an inventory until a final product is assembled — or a failure halts the line.
 
+![Python](https://img.shields.io/badge/Language-Python-blue)
+![Threading](https://img.shields.io/badge/Concurrency-threading-orange)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
+
 ---
 
 ## ✨ Features
@@ -49,7 +53,7 @@ Machine B ──→ Piece2 ──┘
 
 ```
 production-line/
-└── main.py     # Machine class + pipeline setup + thread management
+└── line.py     # Machine class + pipeline setup + thread management
 ```
 
 ---
@@ -63,7 +67,7 @@ Python 3.x — no external dependencies (uses built-in `threading`, `random`, `t
 ### Run
 
 ```bash
-python main.py
+python line.py
 ```
 
 ---
@@ -93,7 +97,7 @@ production failed
 
 ## ⚙️ Configuration
 
-To customize the pipeline, edit the machine definitions in `main.py`:
+To customize the pipeline, edit the machine definitions in `line.py`:
 
 ```python
 Machine(name, processing_time, failure_chance, input_pieces, output_piece)
